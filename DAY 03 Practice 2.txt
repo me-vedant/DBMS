@@ -62,3 +62,37 @@ select * from lms_members_p;
 rollback to s2;
 select * from lms_members_p;
 
+----------------------------------------------------------------------------------
+Question 3 
+
+
+
+
+create table lms_book_details
+(
+book_code varchar2(100),
+book_title varchar2(100),
+book_category varchar2(100),
+author varchar2(100),
+publication varchar2(100),
+publish_date Date,
+book_edition number,
+price number,
+rack_number varchar2(10),
+date_arrivat Date,
+supplier_id varchar2(55)
+);
+select * from lms_book_details;
+alter table  lms_book_details add(ISBN VARCHAR2(16), CURRENCY VARCHAR2(100));  
+alter table  lms_book_details rename column currency to book_currency;
+alter table  lms_book_details drop column ISBN;
+describe lms_book_details;
+/*renaming table */
+describe lms_book_details_p;		
+
+insert into lms_book_details_p values ('BL000001','Java','How To Do Program','JAVA','plpn',to_date('10-12-1999','dd-mm-yyyy'),6,345,'A1',to_date('10-05-2011','dd-mm-yyyy'),'S01','Prentice Hall');
+
+select * from lms_book_details_p;
+insert into lms_book_details_p values ('BL000002','J','How m','JA','plddsdpn',to_date('10-12-1999','dd-mm-yyyy'),15,34555,'A1',to_date('10-05-2011','dd-mm-yyyy'),'S01','Dollars');
+insert into lms_book_details_p values ('BL000003','Java',' Program','JAVA','plpn',to_date('10-12-1999','dd-mm-yyyy'),6,3698745,'A1',to_date('10-05-2011','dd-mm-yyyy'),'S01','RS');
+update  lms_book_details_p set book_category = 'JUNK';
