@@ -1,0 +1,64 @@
+create table lms_members
+(
+SUPPLIER_ID varchar2(100),	
+SUPPLIER_NAME varchar2(100),
+ADDRESS	varchar2(100),
+CONTACT	number,
+EMAIL varchar2(100)
+);
+
+alter table lms_members rename to lms_members_p;
+
+describe lms_members_p;
+ 
+alter table lms_members_p add( BLOOD_GROUP varchar2(100), Country varchar2(100));
+
+alter table lms_members_p rename column country to member_country;
+describe lms_members_p;
+
+alter table lms_members_p modify  blood_group varchar2(3008);
+
+alter table lms_members_p drop column blood_group;
+
+insert into lms_members_p ( SUPPLIER_ID, SUPPLIER_NAME ,ADDRESS	,CONTACT,EMAIL, MEMBER_COUNTRY)
+values
+('S01', 'SINGAPORE SHOPPEE', 'CHENNAI' , 9894123555, 'sing@gmail.com ', 'India');
+
+insert into lms_members_p ( SUPPLIER_ID, SUPPLIER_NAME ,ADDRESS	,CONTACT,EMAIL, MEMBER_COUNTRY)
+values
+('S02', 'JK Stores', 'MUMBAI', '9940123450', 'jks@yahoo.com', 'India');
+insert into lms_members_p values ( 'S03','ROSE BOOK', 'TRIVANDRUM','9444411222', 'rose@gmail.com', 'India');
+insert into lms_members_p values ( 'S03','ROSE BOOK', 'TRIVANDRUM','9444411222', 'rose@gmail.com', 'India');
+insert into lms_members_p values ( 'S04','KAVARI STORE', 'DELHI',	'8630001452','kavi@redif.com', 'India');
+select * from lms_members_p;
+update  lms_members_p set MEMBER_COUNTRY = 'USA' where MEMBER_COUNTRY = 'India'; 
+
+--case 1
+select * from  lms_members_p;
+
+insert into lms_members_p values('S12','ZOMATO','MUMBAI','7855623440','money@gmail.com' ,'India');
+/*entering save point so that even after we delte the ZOMATO ROW its stored as we have save point here */
+exec savepoint s1;
+delete from lms_members_p where SUPPLIER_NAME ='ZOMATO';
+select * from  lms_members_p;
+rollback to s1;
+select * from  lms_members_p;
+-- case 2 commit
+
+select * from lms_members_p;
+insert into lms_members_p values('S10','JIO MART','DELHI', '8644001452','free@rediff.com', 'India');
+delete from lms_members_p where SUPPLIER_NAME = 'JIO MART';
+select * from lms_members_p;
+commit;
+select * from lms_members_p;
+-- case 3  rollback to save points
+ 
+select * from lms_members_p;
+exec savepoint s1;
+insert into lms_members_p values('S08','D MART'	,'MUMBAI'	,'9940123450'	,'dance@gmail.com' ,'India');
+exec savepoint s2;
+insert into lms_members_p values( 'S06','AKBAR STORE',	'MUMBAI', '7855623100',	'akbakst@aol.com', 'India');
+select * from lms_members_p;
+rollback to s2;
+select * from lms_members_p;
+
