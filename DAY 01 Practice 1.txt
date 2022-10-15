@@ -1,0 +1,126 @@
+-------------------------------
+SQL Command Categories Demo
+-------------------------------
+/* b) DML (Data Manipulation Language)[changes made would be Temporary]
+INSERT,UPDATE,DELETE
+*/
+create table MY_FIRST_TABLE
+(
+my_number_column number, 
+my_float_column number(5,2),
+my_date_column date,
+my_timestamp_column timestamp,
+my_timestampTZ_column timestamp with time zone,
+my_varchar2_column varchar2(100)
+);
+
+describe my_first_table;
+
+/* three ways you can get date for a column*/
+select sysdate from dual;
+select current_date from dual;
+select to_date('01-01-2022 13:00:00','dd-mm-yyyy hh24:mi:ss') from dual;
+
+/* three ways you can get timestamp value for a column*/
+select systimestamp from dual;
+select current_timestamp from dual;
+select to_timestamp('01-JAN-2022 13:00:00:9999','dd-mon-yyyy hh24:mi:ss:FF') from dual;
+
+
+
+-- display purposes 
+alter session set nls_date_format = 'dd-mm-yyyy hh24:mi:ss';
+alter session set nls_timestamp_format = 'dd-mm-yyyy hh24:mi:ss.ff';
+
+select * from MY_FIRST_TABLE where MY_NUMBER_COLUMN = 33 order by MY_DATE_COLUMN desc   ;
+-- INSERT INTO MY_FIRST_TABLE(COLUMN_LIST) VALUES (VALUE_LIST);
+
+insert into my_first_table
+(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column,my_varchar2_column)
+values 
+(1,2.9,to_date('01-01-2022 13:00:00','dd-mm-yyyy hh24:mi:ss'),to_timestamp('01-JAN-2022 13:00:00:9999','dd-mon-yyyy hh24:mi:ss:FF'),systimestamp,'my_first_row');
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column)
+VALUES (2,2.2,current_date,current_timestamp,current_timestamp);
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column)
+VALUES (2,2.2,current_date,current_timestamp,current_timestamp);
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column)
+VALUES (3,3.3,current_date,current_timestamp);
+
+-- invalid case for number(5,2) --- 3 digits before point and 2 digits after point 
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column)
+VALUES (12,9999.99,current_date,current_timestamp,current_timestamp);
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column)
+VALUES (12,999.999,current_date,current_timestamp,current_timestamp);
+  ------------------------------------------------------------------------------------------------
+self code + sirs code
+
+create table MY_FIRST_TABLE
+(
+my_number_column number, 
+my_float_column number(5,2),
+my_date_column date,
+my_timestamp_column timestamp,
+my_timestampTZ_column timestamp with time zone,
+my_varchar2_column varchar2(100)
+);
+
+describe MY_FIRST_TABLE;
+insert into my_first_table
+(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column,my_varchar2_column)
+values 
+(1,2.9,to_date('01-01-2022 13:00:00','dd-mm-yyyy hh24:mi:ss'),to_timestamp('01-JAN-2022 13:00:00:9999','dd-mon-yyyy hh24:mi:ss:FF'),systimestamp,'my_first_row');
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column)
+VALUES (2,2.2,current_date,current_timestamp,current_timestamp);
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column,my_timestampTZ_column)
+VALUES (2,2.2,current_date,current_timestamp,current_timestamp);
+
+INSERT INTO MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column)
+VALUES (3,3.3,current_date,current_timestamp);
+
+alter session set nls_date_format ='dd-mm-yyyy hh24:mi:ss ';
+insert into MY_FIRST_TABLE(my_number_column,my_float_column,my_date_column,my_timestamp_column)
+values
+(12,5.6,current_date,current_timestamp)
+
+insert into my_first_table (my_timestampTZ_column)
+values
+(to_timestamp('20-07-1998 17:00:00','dd-mm-yyyy hh24:mi:ss'))
+
+insert into my_first_table (my_timestampTZ_column)
+values
+(systimestamp)
+
+insert into my_first_table(my_date_column)
+values
+(sysdate)
+
+describe MY_FIRST_TABLE;
+
+select * from MY_FIRST_TABLE;
+update my_first_table set my_float_column =3.4 where my_float_column = 2.2;
+
+insert into my_first_table (my_number_column,my_float_column,my_varchar2_column)
+values
+(4,67.09,'vedant')
+
+delete from my_first_table where my_number_column = 4;
+insert into my_first_table (my_number_column,my_float_column,my_varchar2_column)
+values
+(4,67.09,'vedantkulkarni')
+
+
+delete from my_first_table where my_number_column is null;
+
+select * from MY_FIRST_TABLE;
+delete from my_first_table;
+rollback;
+select * from MY_FIRST_TABLE;
+
+
+-------------------------------------------------------------------------------------
