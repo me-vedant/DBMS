@@ -1,0 +1,71 @@
+
+
+
+
+-------------------------Exercise 1 Day 04 Classwork---------------------------------------------------
+create table lms_members
+(
+member_id varchar2(20),
+member_name  varchar2(100) not null ,
+city  varchar2(100),
+date_register  date,
+date_expire date constraint cons3 not null,
+membership_status varchar2(100),
+constraint cons1  primary key(member_id),
+constraint cons4  unique  (member_name),
+constraint cons2 check(date_register > to_date('01-01-2022','dd-mm-yyyy'))
+);
+drop table lms_members;
+alter table lms_members drop constraint cons1
+alter table lms_members drop constraint cons2
+alter table lms_members drop constraint cons3
+--alter table lms_members drop constraint(cons1, cons2, cons3, cons4) ;
+--LM032	Sehwag	India	02-06-2022	29-05-2023	Permanent	Nawada
+
+
+
+desc   lms_members;
+alter table lms_members drop constraint cons4
+alter table lms_members modify (member_name  null)
+insert into lms_members values ('LM009','Nikita','Delhi',to_date('12-12-2022' , 'dd-mm-yyyy'),to_date('12-12-2023' , 'dd-mm-yyyy'),	'Temporary_rajori_road '); 
+insert into lms_members values ('LM009','Niki','Pune',to_date('02-12-2022' , 'dd-mm-yyyy'),to_date('02-12-2023' , 'dd-mm-yyyy'),	'Temporary_bhutan'); 
+insert into lms_members values ('null','Rohit','Mumbai',to_date('09-12-2022' , 'dd-mm-yyyy'),to_date('09-12-2023' , 'dd-mm-yyyy'),	'Temporary_bhutan'); 
+insert into lms_members values ('LM027','Priti','USA',to_date('01-06-2018' , 'dd-mm-yyyy'),to_date('11-05-2023' , 'dd-mm-yyyy'),	'Permanent_Texas'); 
+insert into lms_members values ('LM020','Supriya','Delhi',to_date('12-12-2022' , 'dd-mm-yyyy'),to_date(null , 'dd-mm-yyyy'),	'Permanent_uttam nagar'); 
+insert into lms_members values ('LM024','Gaurav','Delhi',to_date('12-06-2022' , 'dd-mm-yyyy'),to_date('12-05-2023', 'dd-mm-yyyy'),	'Temporary_nawada'); 
+insert into lms_members values ('LM025','Gaurav','pune',to_date('22-06-2022' , 'dd-mm-yyyy'),to_date('22-05-2023', 'dd-mm-yyyy'),	'Permanent_pcmc'); 
+insert into lms_members values ('LM026',null,'nepal',to_date('02-06-2022' , 'dd-mm-yyyy'),to_date('29-05-2023', 'dd-mm-yyyy'),	'Permanent_nepal'); 
+insert into lms_members values ('LM032','Sehwag','India',to_date('02-06-2022' , 'dd-mm-yyyy'),to_date('29-05-2023', 'dd-mm-yyyy'),	'Permanent_Nawada'); 
+select * from lms_members;
+=======================================================
+========================================================Exercise 2
+create table lms_suppliers_details
+(
+    SUPPLIER_ID varchar2(100),
+    SUPPLIER_NAME varchar2(100) not null,
+    ADDRESS	varchar2(100),
+    CONTACT number not null,
+    EMAIL varchar2(20),
+    constraint cons1 primary key(SUPPLIER_ID),
+     constraint cons2 unique(SUPPLIER_name)
+    
+);
+drop table lms_suppliers_details;
+desc lms_suppliers_details; 
+/*[S01		SINGAPORE SHOPPEE	CHENNAI		9894123555	sing@gmail.com // pass
+S01		Test	  			CHENNAI		9894123555	sing@gmail.com // fail
+NUll	Flat	  			CHENNAI		9894123555	sing@gmail.com // fail
+--S02		JK Stores		    MUMBAI		null		jks@yahoo.com // fail
+S03		SINGAPORE SHOPPEE   TRIVANDRUM	9444411222	rose@gmail.com // fail
+S03		null			    TRIVANDRUM	9444411222	rose@gmail.com // fail]*/
+
+
+insert into  lms_suppliers_details values ('S01','SINGAPORE_SHOPPEE','CHENNAI',9894123555,'sing@gmail.com');
+-- insert into  lms_suppliers_details values ('S01','Test','CHENNAI',9894123555,'sing@gmail.com'); will fail as same primary key 
+--insert into  lms_suppliers_details values (NUll,'Flat','CHENNAI',9894123555,'sing@gmail.com'); will fail since primary key can't be null
+--insert into  lms_suppliers_details values ('S02','JK Stores','Mumbai',null ,'jks@yahoo.com'); fail since num,ber is not null
+--  into  lms_suppliers_details values ('S03','SINGAPORE_SHOPPEE','TRIVANDRUM',9444411222,'rose@gmail.com'); failing due to unique constraints
+-- insert into  lms_suppliers_details values ('S03',null,'TRIVANDRUM',9444411222,'rose@gmail.com'); failing since can't insert null
+
+select * from lms_suppliers_details;
+
