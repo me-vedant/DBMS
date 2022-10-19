@@ -1,0 +1,160 @@
+SELECT table_name FROM user_tables; 
+o/p:
+
+TABLE_NAME
+LMS_BOOK_DETAILS
+LMS_BOOK_ISSUE
+LMS_FINE_DETAILS
+LMS_MEMBERS
+LMS_SUPPLIERS_DETAILS
+
+scripting: 
+
+Day 05 SIR: 
+
+-- DECODE/SIMPLE CASE/SEARCHED CASE
+SELECT 
+CITY,
+DECODE(CITY,'CHENNAI','RENAMED_CHENNAI','PUNE','RENAMED_PUNE','DEFAULT_VALUE') DECODE_EXP,
+CASE CITY
+    WHEN 'CHENNAI' THEN 'RENAMED_CHENNAI'
+    WHEN 'PUNE' THEN 'RENAMED_PUNE'
+    ELSE
+    'DEFAULT_VALUE' 
+END SIMPLE_CASE_EXPR,
+CASE 
+    WHEN CITY = 'CHENNAI' THEN 'RENAMED_CHENNAI'
+    WHEN CITY = 'PUNE' THEN 'RENAMED_PUNE'
+    ELSE
+    'DEFAULT_VALUE' 
+END SEARCHED_CASE_EXPR
+FROM LMS_MEMBERS;
+
+MY CODES ON LMS EXAMPLE TRIALS:
+
+
+select BOOK_CODE from LMS_BOOK_DETAILS where BOOK_TITLE like '%Java%';
+ 
+ --gave book codes by searching in the table where book title was someting with java in it
+
+--creating alias for columns
+SELECT 
+mem.CITY my_city, -- renaming column city to my city, and mem wiil be the table alias
+DECODE(CITY,'CHENNAI','RENAMED_CHENNAI','PUNE','RENAMED_PUNE','DEFAULT_VALUE')  DECODE_EXP,
+CASE mem.CITY
+    WHEN 'CHENNAI' THEN 'RENAMED_CHENNAI'
+    WHEN 'PUNE' THEN 'RENAMED_PUNE'
+    ELSE
+    'DEFAULT_VALUE' 
+END SIMPLE_CASE_EXPR,
+CASE 
+    WHEN mem.CITY = 'CHENNAI' THEN 'RENAMED_CHENNAI'
+    WHEN mem.CITY = 'PUNE' THEN 'RENAMED_PUNE'
+    ELSE
+    'DEFAULT_VALUE' 
+END SEARCHED_CASE_EXPR
+FROM LMS_MEMBERS mem;
+
+--one and the same --> Decode and case expression 
+
+
+select * from LMS_BOOK_ISSUE;
+select
+mem.MEMBER_ID iden,
+DECODE(MEMBER_ID,'LM001','hrishi','LM002','vedant','Default_value') DECODE_EXP
+from LMS_BOOK_ISSUE mem;
+
+o/p--
+IDEN	DECODE_EXP
+LM001	hrishi
+LM002	vedant
+LM003	Default_value
+LM004	Default_value
+LM005	Default_value
+LM003	Default_value
+LM001	hrishi
+LM002	vedant
+LM003	Default_value
+LM004	Default_value
+LM005	Default_value
+LM003	Default_value
+LM001	hrishi
+LM002	vedant
+LM003	Default_value
+LM004	Default_value
+LM005	Default_value
+LM003	Default_value
+LM001	hrishi
+LM002	vedant
+LM003	Default_value
+LM004	Default_value
+LM005	Default_value
+LM003	Default_value
+
+
+------------------
+   [-date return was the og name of the column now its 
+acting as a variable in trunc and dates is the new name of the column in this query]
+select 
+date_return dates,
+case  trunc(date_return) [--trunc()removes time component from the date]
+    when to_date('16-MAY-12','dd-mon-yy') then to_date('2022-03-22','yyyy-mm-dd')
+    else    [- everything has to be date since data type is date for this column ]
+    sysdate  
+END simple_date
+from LMS_BOOK_ISSUE;
+
+------------------------------------------------------------------------------------------------
+select * from LMS_BOOK_ISSUE;
+select
+fine_range fines,
+decode(fine_range,NULL,'paise_naka_bharu') paise
+from LMS_BOOK_ISSUE;
+select
+fine_range fines,
+case 
+    when fine_range is NULL then 'oho_paise_bhar'
+END paisa
+from LMS_BOOK_ISSUE;
+
+------------------================================================================================
+--Day 04 hands-on Assignment
+select * from lms_members;
+select member_name from lms_members where upper(member_name) like '%A%';
+--======================================================================
+select * from lms_suppliers_details;
+select supplier_name from lms_suppliers_details where lower(address) in ('chennai','delhi','ahmedabad');
+--==================================================================
+select member_name,city,date_expire,
+trunc(date_expire) - trunc(date_register) duration
+from lms_members;
+--========================================================================
+select supplier_name,contact,email from lms_suppliers_details 
+where lower(address) in('mumbai','delhi') and lower(email) not like '%gmail%';
+--=============================================================================
+select member_name,membership_status from lms_members 
+where member_name like '%A%' or  member_name like '%a%' and lower(membership_status) in('temporary');
+ --===========================================================================
+select member_name,membership_status, city from lms_members
+where lower(city) in ('pune') and lower(membership_status) in ('permanent'); 
+
+--======================================================================
+select supplier_name,email from lms_suppliers_details
+where lower(email) like '%gmail%';
+--======================================================================
+
+select table_name from user_tables;
+select * from LMS_BOOK_DETAILS;
+select book_title from lms_book_details 
+where publication = 'Tata Mcgraw Hill ';
+
+---========================================================================
+select
+book_title,category,publication,publish_date,
+case
+    when category = 'JAVA' then 'OOP'
+    when category = 'C' then 'PL'
+    else
+        null
+END name
+from lms_book_details where extract(year from publish_date) >= '2005' and publication != 'Tata Mcgraw Hill ';
