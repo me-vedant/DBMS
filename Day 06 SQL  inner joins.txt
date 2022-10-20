@@ -344,6 +344,53 @@ where bd.RACK_NUM is NULL;
 /* name of the supplier who has not supplied any book 
 and that supplier lives in PUNE/MUMBAI/DELHI*/
 
+select sd.SUPPLIER_NAME,sd.ADDRESS
+from  LMS_SUPPLIERS_DETAILS sd inner join LMS_BOOK_DETAILS bd on (sd.SUPPLIER_ID = bd.SUPPLIER_ID)
+where  bd.SUPPLIER_ID is NULL and lower(sd.address) = lower('delhi','pune','mumbai');
+
+/* Name of the book , edition , publication that have never been issued  */
+select * from LMS_BOOK_ISSUE ;
+select * from LMS_BOOK_DETAILS;
+
+select bd.BOOK_TITLE,bd.BOOK_EDITION,bd.PUBLICATION
+from LMS_BOOK_DETAILS bd left outer join LMS_BOOK_ISSUE bi on (bd.BOOK_CODE = bi.BOOK_CODE);
+
+
+/* Name of the book , edition , publication that have been issued to members
+who have enrolled after 01-01-1999*/
+
+select * from lms_members;
+select bd.BOOK_TITLE,bd.BOOK_EDITION,bd.PUBLICATION
+from LMS_BOOK_DETAILS bd inner join LMS_BOOK_ISSUE bi on (bd.BOOK_CODE = bi.BOOK_CODE) inner join lms_members mem on (bi.MEMBER_ID = mem.MEMBER_ID)
+where mem.DATE_REGISTER > to_date('01-01-1999','dd-mm-yyyy');
+
+/* Name of the members who have issued a book later than 01-01-2000*/
+
+select bd.BOOK_TITLE,bd.BOOK_EDITION,bd.PUBLICATION
+from LMS_BOOK_DETAILS bd inner join LMS_BOOK_ISSUE bi on (bd.BOOK_CODE = bi.BOOK_CODE) inner join lms_members mem on (bi.MEMBER_ID = mem.MEMBER_ID)
+where mem.DATE_REGISTER > to_date('01-01-2000','dd-mm-yyyy');
+
+/* Name of the members who have issued a book and such that book supplier belongs to PUNE/MUMBAI/DELHI*/
+
+select mem.MEMBER_NAME
+from lms_members mem inner join LMS_BOOK_ISSUE bi on (mem.MEMBER_ID = bi.MEMBER_ID) inner join LMS_BOOK_DETAILS bd on (bi.BOOK_CODE = bd.BOOK_CODE)
+inner join LMS_SUPPLIERS_DETAILS sd on (bd.SUPPLIER_ID = sd.SUPPLIER_ID)
+where sd.ADDRESS= 'DELHI';
+
+/* Name of the members who have issued a book from the publication "The MIT Press" */
+
+select mem.MEMBER_NAME
+from lms_members mem inner join LMS_BOOK_ISSUE bi on (mem.MEMBER_ID = bi.MEMBER_ID ) inner join LMS_BOOK_DETAILS bd on (bi.BOOK_CODE = bd.BOOK_CODE )
+where bd.PUBLICATION = 'The MIT Press';
+
+
+
+
+
+
+
+
+
 
 
 
