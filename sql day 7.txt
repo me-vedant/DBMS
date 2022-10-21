@@ -371,6 +371,40 @@ group by MEMBERSHIP_STATUS,city
 
 
 
+/* count of suppliers against their respective category of email accounts who have gmail and yahoo accounts eg: gmail/yahoo
+category cnt 
+gmail     6
+yahoo     2
+*/
+
+select * from LMS_SUPPLIERS_DETAILS;
+
+select substr (email,-9,5)email , count(email)
+from LMS_SUPPLIERS_DETAILS
+--where email like '%gmail%' or email like '%yahoo%'
+group by substr (email,-9,5) 
+having substr (email,-9,5) in ('gmail' , 'yahoo')
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
