@@ -369,8 +369,6 @@ from LMS_MEMBERS
 group by MEMBERSHIP_STATUS,city
 
 
-
-
 /* count of suppliers against their respective category of email accounts who have gmail and yahoo accounts eg: gmail/yahoo
 category cnt 
 gmail     6
@@ -384,6 +382,101 @@ from LMS_SUPPLIERS_DETAILS
 --where email like '%gmail%' or email like '%yahoo%'
 group by substr (email,-9,5) 
 having substr (email,-9,5) in ('gmail' , 'yahoo')
+
+
+
+/* count of suppliers against their respective category of email accounts who have gmail and yahoo accounts eg: gmail/yahoo
+category cnt 
+gmail     6
+yahoo     2
+using case
+*/
+
+select count(email),
+(case
+
+    When Email like '%gmail%' then 'gmail'
+    When Email like '%yahoo%' then 'yahoo'
+end )mails
+from LMS_SUPPLIERS_DETAILS 
+where email like '%gmail%' or email like '%yahoo%'
+group by (case
+
+    When Email like '%gmail%' then 'gmail'
+    When Email like '%yahoo%' then 'yahoo'
+end );
+
+/* category of book ,
+    total number of books under that category 
+    such that the category has more than 2 books 
+*/
+select * from LMS_BOOK_DETAILS;
+select * from LMS_BOOK_ISSUE;
+
+select CATEGORY, count(*)
+from LMS_BOOK_DETAILS
+group by CATEGORY
+having count(*) > 2
+
+/* book code and name of the book which has been issued atleast twice */ 
+select bd.BOOK_TITLE,bd.book_code, count(bi.BOOK_CODE)
+from LMS_BOOK_ISSUE bi inner join LMS_BOOK_DETAILS bd on (bi.BOOK_CODE = bd.BOOK_CODE)
+group by bd.book_code,bd.BOOK_TITLE
+having count(bi.BOOK_CODE) > 2
+
+/* book codes and their issued counts */
+select bd.book_code,count(*)
+from LMS_BOOK_ISSUE bi inner join LMS_BOOK_DETAILS bd on (bi.BOOK_CODE = bd.BOOK_CODE)
+group by  bd.book_code
+
+/* book_code and name of the book which has been issued more than 4 times 
+   and has more than 0 suppliers 
+   (Note: Java how to program has 2 book codes because of different published date) 
+*/
+
+select bd.BOOK_CODE,bd.BOOK_TITLE, count(bd.BOOK_CODE)
+from LMS_BOOK_ISSUE bi inner join LMS_BOOK_DETAILS bd on (bi.BOOK_CODE = bd.BOOK_CODE) join LMS_SUPPLIERS_DETAILS sd on (bd.SUPPLIER_ID = sd.SUPPLIER_ID )
+group by bd.BOOK_CODE,bd.BOOK_TITLE
+having count(bd.BOOK_CODE) > 4
+
+/* name of the book which has been issued more than 4 times and has more than 0 suppliers */
+
+select bd.book_title, count(bd.BOOK_TITLE)
+from LMS_BOOK_ISSUE bi inner join LMS_BOOK_DETAILS bd on (bi.BOOK_CODE = bd.BOOK_CODE) join LMS_SUPPLIERS_DETAILS sd on (bd.SUPPLIER_ID = sd.SUPPLIER_ID )
+group by bd.BOOK_TITLE
+having count(bd.BOOK_TITLE) > 4
+
+/*
+-- name of the supplier along with his contact number with an  flag 'Y' or 'N'
+-- 'y' -> he had supplied a book which has been issued to two or more members 
+-- 'n' --> he had supplied a book which has been issued to  less than two members 
+-- 'NA' --> if he hasn't supplied any book 
+
+
+supplier_name supplier_contact flag
+xyz             9090           Y    -> he had supplied a book which has been issued to two or more members 
+abc             9090           N    -> he had supplied a book which has been issued to  less than two members 
+efg             9090           NA   -> if he hasn't supplied any book 
+
+*/
+select * from LMS_BOOK_ISSUE;
+select * from LMS_BOOK_DETAILS;
+
+select sd.supplier_name,sd.CONTACT, count (*)
+from LMS_SUPPLIERS_DETAILS sd inner join LMS_BOOK_DETAILS bd on( sd.SUPPLIER_ID = bd.SUPPLIER_ID)
+group by sd.supplier_name,sd.CONTACT
+(case
+    
+
+
+
+
+
+
+
+
+
+
 
 
 
