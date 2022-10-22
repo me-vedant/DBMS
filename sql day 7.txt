@@ -462,10 +462,25 @@ efg             9090           NA   -> if he hasn't supplied any book
 select * from LMS_BOOK_ISSUE;
 select * from LMS_BOOK_DETAILS;
 
-select sd.supplier_name,sd.CONTACT, count (*)
-from LMS_SUPPLIERS_DETAILS sd inner join LMS_BOOK_DETAILS bd on( sd.SUPPLIER_ID = bd.SUPPLIER_ID)
+select table_name from user_tables;
+select * from LMS_BOOK_DETAILS;
+select * from LMS_BOOK_ISSUE;
+select * from LMS_FINE_DETAILS;
+select * from LMS_MEMBERS;
+select * from LMS_SUPPLIERS_DETAILS;
+
+select sd.supplier_name,sd.CONTACT, 
+case
+    when count(bd.supplier_id) = 0 then 'na'
+    
+    when count(bd.supplier_id) >= 2and count(bi.book_code) >= 2 then 'y'
+    else
+    'n'
+end  as FLAG
+
+from LMS_SUPPLIERS_DETAILS sd full outer join LMS_BOOK_DETAILS bd on( sd.SUPPLIER_ID = bd.SUPPLIER_ID) full outer  join LMS_BOOK_ISSUE bi on ( bd.book_code = bi.book_code)
+where sd.supplier_name is not null
 group by sd.supplier_name,sd.CONTACT
-(case
     
 
 
