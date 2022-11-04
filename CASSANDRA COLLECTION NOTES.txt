@@ -1,0 +1,77 @@
+// CASSANDRA NOTES //
+// COLLECTIONS// 
+//MAPS//
+
+create table lms_members(
+id text,
+name text,
+date_register date,
+favs map <int, text>,
+PRIMARY KEY (id)
+);
+
+insert into lms_members (id,name,date_register, favs) values ( '1', 'vedant', '2022-12-12',{ 1 : 'JAVA' } );
+insert into lms_members (id,name,date_register,favs) values ( '2', 'GyanDevesh','2023-12-12' ,{ 1 : 'MongoDB' } );
+insert into lms_members (id,name,date_register,favs) values ( '3', 'raman','2024-12-12' ,{ 1 : 'SQL' } );
+insert into lms_members (id,name,date_register,favs) values ( '4', 'abhisheikh','2025-12-13' ,{ 1 : 'Topper' } );	
+
+//update map
+update lms_members set favs = favs + {2: 'History'} where id ='1'; --- ADD NEW KEY VALUE PAIR IN MAP 
+update lms_members set favs = favs - {2: 'History'} where id ='1'; -- CANNOT BE DONE IT SHOULD ONLY BE A SET 
+
+// set//
+
+ create table lms_names(
+ id int PRIMARY KEY,
+ owner_name text,
+ pets set<text> 
+);
+INSERT into lms_names (id,owner_name,pets) values(1,'abhi',{'dog','cat','mosquito','cockroach' });
+INSERT into lms_names (id,owner_name,pets) values(2,'sumeet',{'dog','cat','mosquito','cockroach' });
+select * from lms_names;
+update lms_names set pets = pets + {'ass','lion','tiger'} where id = 1;
+update lms_names set pets = pets - {'ass','lion'} where id = 1;
+
+//list//
+CREATE TABLE plays (
+    id text PRIMARY KEY,
+    game text,
+    players int,
+    scores list<int> 
+);
+
+insert into plays (id,game,players,scores) values ('1','cricket',2,[1,0]);
+update plays set players =5 , scores= scores+ [5,2,1] where id ='1';
+DELETE scores[1] FROM plays WHERE id = '1'; --Error from server: code=2200 [Invalid query] message="Removal of list items by index requiring read before write is not allowed" 
+^ dont know why there is an error
+update plays set  scores = scores - [ 5,2] where id ='1';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
