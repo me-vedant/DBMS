@@ -47,7 +47,59 @@ DELETE scores[1] FROM plays WHERE id = '1'; --Error from server: code=2200 [Inva
 update plays set  scores = scores - [ 5,2] where id ='1';
 
 
+----------------------------------------------------------------------------
+Cassandra [Optional ]
+----------------
+Create a table lms_book_details_by_publication_category 
+with (PUBLICATION,CATEGORY) as partition key and book_code as clustering key 
+and other columns BOOK_TITLE,AUTHOR,PUBLISH_DATE,PRICE,RACK_NUM,DATE_ARRIVAL
+BOOK_EDITIONS is a list of all possible book editions that book can have  [2 marks]
 
+Insert some random 6 records to the table
+write following queries : 
+
+
+
+
+c) Add a new column to the table named "my_comments"  of datatype text
+
+alter table lms_book_details_by_publication_category add my_comments text;
+
+
+
+
+	
+
+create table lms_book_details(
+book_title text,
+author text,
+publish_date date,
+price int,
+rack_num int,
+date_arrival date,
+book_editions list <int>,
+publication text,
+category text,
+book_code int,
+primary key((publication,category),book_code)
+);
+
+     insert into lms_book_details(book_title,author,publish_date,price,rack_num,date_arrival,book_editions,publication,category,book_code) values ('a','b','2022-05-06',45,1,'2019-06-07',2,'Tata Mcgraw Hill','Java',2 );
+     insert into lms_book_details(book_title,author,publish_date,price,rack_num,date_arrival,book_editions,publication,category,book_code) values ('v','n','2020-05-06',55,2,'2019-06-07',3,'VK','Python',3 );
+
+a) add to the existing list book edition number = -9999
+	where publication is 'Tata Mcgraw Hill' and category is 'Java' 
+	for a particular book_code of your choice
+
+     update lms_book_details  set book_editions = book_editions + [9999]  where  publication = 'Tata Mcgraw Hill' and category= 'Java' and book_code = 2;
+	
+b) select all books where publication is 'Tata Mcgraw Hill' and category is 'Java'
+
+       select * from lms_book_details where publication = 'Tata Mcgraw Hill' and category = 'Java' ;
+
+       alter table lms_book_details_by_publication_category add my_comments text;
+
+       delete from lms_book_details_by_publication_category where publication = 'V.K' and category ='WOrld of cricket' and  book_code=  1 ; 
 
 
 
