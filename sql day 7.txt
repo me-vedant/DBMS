@@ -481,7 +481,70 @@ end  as FLAG
 from LMS_SUPPLIERS_DETAILS sd full outer join LMS_BOOK_DETAILS bd on( sd.SUPPLIER_ID = bd.SUPPLIER_ID) full outer  join LMS_BOOK_ISSUE bi on ( bd.book_code = bi.book_code)
 where sd.supplier_name is not null
 group by sd.supplier_name,sd.CONTACT
-    
+    ================================================================================================================================================
+    /*Oracle  [10 marks]
+----------------
+1) create a table named EMPLOYEES (empno,name,job,hiredate,salary,commission,deptno)
+   with empno as pk and deptno as fk 
+   create table named DEPARTMENTS (deptno,name,location) with deptno as pk [2 marks]
+
+2) Insert 6-7 records to the table [0 marks]
+3) Fire following queries on the table [2 marks each]
+
+a) provide the names of all employees which belong to a department name "Engineering"
+   and whose salary is between 1000 and 10000
+b) provide the count of no of employees in a given dept_no
+c) update the commission of all employees by 60 percent
+d) delete the employees whose commission is less than 1000 */
+
+create table employees(
+empno varchar2(100) constraint cons1 Primary key,
+name varchar2(100),
+job varchar2(100),
+hiredate date,
+salary int,
+commission float,
+deptno number
+);
+
+
+create table departments(
+deptno number constraint cons3 Primary key,
+name varchar2(100),
+location varchar2(100)
+);
+drop table departments;
+drop table employees;
+
+insert into employees values ('v1','vedant','hacker',to_date('2022-12-12','yyyy-mm-dd'),2002,500,1);
+insert into employees values ('v2','a','engg',to_date('2012-12-12','yyyy-mm-dd'),100,450,1);
+insert into employees values ('v3','b','sales',to_date('2000-10-12','yyyy-mm-dd'),450,250,2);
+
+insert into departments values (1,'Engg','Thane');
+insert into departments values (2,'sales','NaviMumbai');
+
+--a) provide the names of all employees which belong to a department name "Engineering"
+  -- and whose salary is between 1000 and 10000
+  
+select * from employees; 
+
+select emp.name, dept.deptno
+from  employees emp inner join  departments dept on (emp.deptno = dept.deptno) 
+where emp.deptno = 1;
+--b) provide the count of no of employees in a given dept_no
+
+select deptno , count (*)
+from employees
+group by deptno ;
+
+--c) update the commission of all employees by 60 percent
+update employees
+set commission = commission *1.6;
+select * from employees;
+-- d) delete the employees whose commission is less than 1000 
+delete from employees
+where commission < 1000;
+
 
 
 
