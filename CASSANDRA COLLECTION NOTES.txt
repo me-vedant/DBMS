@@ -101,7 +101,17 @@ b) select all books where publication is 'Tata Mcgraw Hill' and category is 'Jav
 
        delete from lms_book_details_by_publication_category where publication = 'V.K' and category ='WOrld of cricket' and  book_code=  1 ; 
 
+============================================================================
+create table faculty(
+fid int,
+name text,
+skill list <text>,
+primary key (fid, name)
+);
 
+insert into faculty (fid, name , skill) values (1, 'Seema', ['English','Hindi']);
+update faculty set skill = skill + ['French'] where fid= 1 and name = 'Seema';
+delete from faculty where fid = 123 and name = 'Seema1';
 
 
 
