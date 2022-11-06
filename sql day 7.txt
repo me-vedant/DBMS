@@ -546,6 +546,69 @@ delete from employees
 where commission < 1000;
 
 
+=============================================================================================================================================
+create table OrderDetails
+(ordid int constraint cons1 Primary Key,
+orddate Date,
+customername varchar2(100),
+totalamount float
+);
+create table ordererproduct
+(productid int constraint cons2 Primary Key,
+orderid int,
+price float,
+discount float,
+qty int
+);
+create table product_master
+(productid int constraint cons3 Primary Key,
+productname varchar2(100),
+suppliername varchar2(100),
+masterprice varchar2(100)
+);
+
+insert into OrderDetails values(1,to_date('2022-11-06','yyyy-mm-dd'),'vedant',100000.65);
+insert into OrderDetails values(2,to_date('2021-11-06','yyyy-mm-dd'),'abhi',989898.65);
+insert into OrderDetails values(3,to_date('2019-11-06','yyyy-mm-dd'),'hrishi',5454.65);
+insert into OrderDetails values(4,to_date('2022-11-08','yyyy-mm-dd'),'sumeet ',700.65);
+insert into OrderDetails values(5,to_date('2022-07-06','yyyy-mm-dd'),'vikas',656.65);
+
+insert into ordererproduct values(1,1,6689.65,600.95,150);
+insert into ordererproduct values(2,2,70000.65,6320.95,25);
+insert into ordererproduct values(3,3,454.45,855.95,35);
+insert into ordererproduct values(4,4,7852.65,100.95,7);
+insert into ordererproduct values(5,5,3000.65,99.95,2);
+
+insert into product_master values(1,'Books','Dmart',6689.65);
+insert into product_master values(2,'Gold','Swiggy',70000);
+insert into product_master values(3,'Tank','Zomato',1000);
+insert into product_master values(4,'Planes','FEDEX',800);
+insert into product_master values(5,'Laptops','Amazon',6500.3);
+insert into product_master values(6,'Phones','Amazon',6500.3);
+
+
+select od.orddate, od.customername,  pm.productname, pm.suppliername
+from OrderDetails od full outer join ordererproduct op on ( od.ordid = op.orderid)  full outer join product_master pm on (pm.productid = op.productid )
+where totalamount > 20000;
+
+select ordid, customername, totalamount from OrderDetails
+where extract (year from orddate) < 2022
+
+select pm.productname, pm.productid
+from OrderDetails od full outer join ordererproduct op on(od.ordid = op.orderid) 
+right join product_master pm on (pm.productid = op.productid)
+
+select od.ordid  , od.customername ,op.productid ,op.qty 
+from OrderDetails od inner join ordererproduct op on ( od.ordid = op.orderid) 
+where op.qty > 7 and op.qty <12;
+
+select  sum(masterprice) sum_master_price,max(masterprice) max_price , min(masterprice) min_price
+from product_master 
+
+
+
+
+
 
 
 
