@@ -606,7 +606,10 @@ select  sum(masterprice) sum_master_price,max(masterprice) max_price , min(maste
 from product_master 
 
 
-
+================================
+select sng.songname 
+from song sng 
+where DURATION >=2 and DURATION <= 7;
 
 
 
