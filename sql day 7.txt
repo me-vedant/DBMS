@@ -612,7 +612,24 @@ from song sng
 where DURATION >=2 and DURATION <= 7;
 
 
+=========================
+create table  salesman
+(    sid int,
+     name text,
+	 email_list list <text>,
+     PRIMARY KEY(sid,name)
+);
 
+insert into salesman(sid,name,email_list) values (12, '', ['12@gmail']);
+insert into salesman(sid,name,email_list) values (123, 'kumar', ['123@gmail']);
+delete from salesman  where sid = 123 and name = 'kumar';
+
+
+insert into salesman(sid,name,email_list) values (101, '', ['101@gmail']);
+insert into salesman(sid,name,email_list) values (150, '', ['150@gmail']);
+insert into salesman(sid,name,email_list) values (50, '', ['50@gmail']);
+select email_list from salesman where sid = 101 and sid = 150 and sid = 50;
+select * from salesman where sid = 101 and sid= 150 and sid= 50;
 
 
 
