@@ -121,6 +121,19 @@ delete from faculty where fid = 123 and name = 'Seema1';
 
 
 
+======================================
+db.getCollection("book").find(
+    {
+        "$or" : [
+            {
+                "title" : /^P.*$/i
+            },
+            {
+                "title" : /^x.*$/i
+            }
+        ]
+    }
+);
 
 
 
